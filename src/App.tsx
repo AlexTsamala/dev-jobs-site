@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Header from "./components/Head";
 import { createGlobalStyle } from "styled-components";
 import Filter from "./components/Filter";
+import JobsList from "./components/JobsList";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <GlobalStyles />
       <Header />
       <Filter />
+      <JobsList />
     </Container>
   );
 }
@@ -22,7 +24,14 @@ const GlobalStyles = createGlobalStyle`
         padding:0;
         font-family:'Kumbh Sans', sans-serif;;
       }
+      body{
+        background-color: #F4F6F8;
+      }
     
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

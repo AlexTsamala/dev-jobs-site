@@ -23,6 +23,11 @@ const Section = styled.div`
   width: 327px;
   border-radius: 6px;
   background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 0 24px;
+  transform: translateY(-40px);
 `;
 
 const LocationSearchSection = styled.div``;
@@ -32,6 +37,8 @@ const SearchButton = styled.button`
   width: 48px;
   background-color: #5964e0;
   border-radius: 5px;
+  border: none;
+  margin-left: 24px;
 `;
 
 const FilterInput = styled.input`
