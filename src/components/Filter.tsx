@@ -1,14 +1,63 @@
 import styled from "styled-components";
 import filterIMG from "../assets/mobile/icon-filter.svg";
+import filterDarkIMG from "../assets/mobile/icon-filter-white.svg";
 import searchIMG from "../assets/desktop/icon-search.svg";
+import data from "../data.json";
+import { useState } from "react";
 
-const Filter = () => {
+interface FilterProps {
+  darkMode: boolean;
+  setFilterValue: (filterValue: string) => void;
+  filterValue: string;
+  setFilteredArray: any;
+  openFilterModal: boolean;
+  setFilterModal: (openFilterModal: boolean) => void;
+}
+
+const Filter = (props: FilterProps) => {
+  const filterHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setFilterValue(event.target.value);
+  };
+
+  const filterModalHandler = () => {
+    props.setFilterModal(!props.openFilterModal);
+  };
+
+  const searchButtonHandler = () => {
+    const newArray = data.slice();
+    const result = newArray.filter((item) =>
+      item.position.includes(props.filterValue)
+    );
+    props.setFilteredArray(result);
+  };
+
   return (
-    <Section>
-      <FilterInput type="text" placeholder="Filter by title…" />
+    <Section color={props.darkMode ? " #19202D" : "#FFFFFF"}>
+      <FilterInput
+        onChange={filterHandler}
+        value={props.filterValue}
+        placeholderColor={props.darkMode ? " #FFFFFF" : "#19202D"}
+        color={props.darkMode ? " #19202D" : "#FFFFFF"}
+        type="text"
+        placeholder="Filter by title…"
+      />
       <LocationSearchSection>
-        <img alt="location" src={filterIMG} />
-        <SearchButton>
+        {props.darkMode ? (
+          <img
+            onClick={filterModalHandler}
+            alt="location"
+            style={{ cursor: "pointer" }}
+            src={filterDarkIMG}
+          />
+        ) : (
+          <img
+            onClick={filterModalHandler}
+            alt="location"
+            style={{ cursor: "pointer" }}
+            src={filterIMG}
+          />
+        )}
+        <SearchButton onClick={searchButtonHandler}>
           <img alt="search" src={searchIMG} />
         </SearchButton>
       </LocationSearchSection>
@@ -22,7 +71,7 @@ const Section = styled.div`
   height: 80px;
   width: 327px;
   border-radius: 6px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.color};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,10 +88,17 @@ const SearchButton = styled.button`
   border-radius: 5px;
   border: none;
   margin-left: 24px;
+  cursor: pointer;
 `;
 
-const FilterInput = styled.input`
+const FilterInput = styled.input<{ placeholderColor: string; color: string }>`
   border: none;
+  color: ${(props) => props.placeholderColor};
+  background-color: ${(props) => props.color};
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0px;
   ::placeholder,
   ::-webkit-input-placeholder {
     font-family: "Kumbh Sans", sans-serif;
@@ -50,7 +106,7 @@ const FilterInput = styled.input`
     font-weight: 400;
     line-height: 20px;
     letter-spacing: 0px;
-    color: #19202d;
+    color: ${(props) => props.placeholderColor};
     mix-blend-mode: normal;
     opacity: 0.5;
   }

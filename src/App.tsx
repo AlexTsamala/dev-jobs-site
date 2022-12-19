@@ -4,30 +4,43 @@ import { createGlobalStyle } from "styled-components";
 import Filter from "./components/Filter";
 import JobsList from "./components/JobsList";
 import { useState } from "react";
+import FilterModal from "./components/FIlterModal";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const [filterValue, setFilterValue] = useState<string>("");
+  const [filteredArray, setFilteredArray] = useState([]);
+  const [openFilterModal, setFilterModal] = useState(false);
+
   return (
     <Container>
-      <GlobalStyles />
-      <Header />
-      <Filter />
-      <JobsList />
+      <GlobalStyles color={darkMode ? "#121721" : "#F4F6F8"} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Filter
+        openFilterModal={openFilterModal}
+        setFilterModal={setFilterModal}
+        darkMode={darkMode}
+        setFilterValue={setFilterValue}
+        filterValue={filterValue}
+        setFilteredArray={setFilteredArray}
+      />
+      <JobsList filteredArray={filteredArray} darkMode={darkMode} />
+      {openFilterModal ? <FilterModal darkMode={darkMode} /> : null}
     </Container>
   );
 }
 
 export default App;
 
-const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle<{ color: string }>`
     *{
         box-sizing:border-box;
         margin:0;
         padding:0;
-        font-family:'Kumbh Sans', sans-serif;;
+        font-family:'Kumbh Sans', sans-serif;
       }
       body{
-        background-color: #F4F6F8;
+        background-color: ${(props) => props.color}
       }
     
 `;

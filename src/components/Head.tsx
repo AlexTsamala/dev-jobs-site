@@ -2,8 +2,18 @@ import styled from "styled-components";
 import backgroundIMG from "../assets/mobile/bg-pattern-header.svg";
 import sunIMG from "../assets/desktop/icon-sun.svg";
 import moonIMG from "../assets/desktop/icon-moon.svg";
+import { produceWithPatches } from "immer";
 
-const Header = () => {
+interface propsType {
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+}
+
+const Header = (props: propsType) => {
+  const handleDarkMode = () => {
+    props.setDarkMode(!props.darkMode);
+  };
+
   return (
     <Container>
       <h1>devJobs</h1>
@@ -11,7 +21,11 @@ const Header = () => {
         <img alt="sun" src={sunIMG} />
         <label className="switch style-1">
           <input type="checkbox" />
-          <div className="toggler-slider" id="switcher">
+          <div
+            onClick={handleDarkMode}
+            className="toggler-slider"
+            id="switcher"
+          >
             <div className="toggler-knob"></div>
           </div>
         </label>

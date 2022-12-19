@@ -1,20 +1,21 @@
 import { useState } from "react";
 import styled from "styled-components";
-import companyLogo from "../assets/logos/scoot.svg";
 import data from "../data.json";
 import LoadMoreButton from "./LoadMoreButton";
 
-const JobsList = () => {
+const JobsList = (props: { darkMode: boolean; filteredArray: any }) => {
   const [loadJobs, setLoadJobs] = useState<boolean>(true);
   const [pages, setPages] = useState<number>(1);
-  const loadMore = () => {
-    return data.slice(0, 12 * pages);
-  };
+
+  let filteredData =
+    props.filteredArray.length > 0
+      ? props.filteredArray
+      : data.slice(0, 12 * pages);
 
   return (
     <MainContainer>
-      {loadMore().map((item, index) => (
-        <Section key={index}>
+      {filteredData.map((item: any, index: any) => (
+        <Section color={props.darkMode ? " #19202D" : "#FFFFFF"} key={index}>
           <LogoBackground backColor={item.logoBackground}>
             <img alt={item.company} src={process.env.PUBLIC_URL + item.logo} />
           </LogoBackground>
@@ -23,7 +24,9 @@ const JobsList = () => {
             <TimeSpans>.</TimeSpans>
             <TimeSpans>{item.contract}</TimeSpans>
           </div>
-          <PositionName>{item.position}</PositionName>
+          <PositionName color={props.darkMode ? " #FFFFFF" : "#19202d"}>
+            {item.position}
+          </PositionName>
           <CompanyName>{item.company}</CompanyName>
           <CountryName>{item.location}</CountryName>
         </Section>
@@ -51,7 +54,7 @@ const MainContainer = styled.div`
 `;
 
 const Section = styled.div`
-  background-color: #ffffff;
+  background-color: ${(props) => props.color};
   border-radius: 6px;
   position: relative;
   padding: 49px 36px 36px 32px;
@@ -73,7 +76,7 @@ const PositionName = styled.h1`
   font-weight: 700;
   line-height: 25px;
   letter-spacing: 0px;
-  color: #19202d;
+  color: ${(props) => props.color};
   margin: 16px 0;
 `;
 

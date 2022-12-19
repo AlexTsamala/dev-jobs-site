@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-type AppProps = {
+interface AppProps {
   pages: number;
   setPages: (pages: number) => void;
   loadJobs: boolean;
   setLoadJobs: (loadJobs: boolean) => void;
-};
+}
 
 const LoadMoreButton = (props: AppProps) => {
   const loadButtonHandler = () => {
