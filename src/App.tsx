@@ -3,8 +3,10 @@ import Header from "./components/Head";
 import { createGlobalStyle } from "styled-components";
 import Filter from "./components/Filter";
 import JobsList from "./components/JobsList";
+import { useState } from "react";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
   return (
     <Container>
       <GlobalStyles />
