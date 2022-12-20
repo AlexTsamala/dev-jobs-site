@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import data from "../data.json";
+import AboutJob from "./AboutJob";
 import LoadMoreButton from "./LoadMoreButton";
 
 const JobsList = (props: {
@@ -17,33 +18,39 @@ const JobsList = (props: {
       : data.slice(0, 12 * pages);
 
   return (
-    <MainContainer>
-      {filteredData.map((item: any, index: any) => (
-        <Section color={props.darkMode ? " #19202D" : "#FFFFFF"} key={index}>
-          <LogoBackground backColor={item.logoBackground}>
-            <img alt={item.company} src={process.env.PUBLIC_URL + item.logo} />
-          </LogoBackground>
-          <div>
-            <TimeSpans>{item.postedAt}</TimeSpans>
-            <TimeSpans>.</TimeSpans>
-            <TimeSpans>{item.contract}</TimeSpans>
-          </div>
-          <PositionName color={props.darkMode ? " #FFFFFF" : "#19202d"}>
-            {item.position}
-          </PositionName>
-          <CompanyName>{item.company}</CompanyName>
-          <CountryName>{item.location}</CountryName>
-        </Section>
-      ))}
-      {props.loadJobs ? (
-        <LoadMoreButton
-          pages={pages}
-          setPages={setPages}
-          loadJobs={props.loadJobs}
-          setLoadJobs={props.setLoadJobs}
-        />
-      ) : null}
-    </MainContainer>
+    <>
+      {/* <MainContainer>
+        {filteredData.map((item: any, index: any) => (
+          <Section color={props.darkMode ? " #19202D" : "#FFFFFF"} key={index}>
+            <LogoBackground backColor={item.logoBackground}>
+              <img
+                alt={item.company}
+                src={process.env.PUBLIC_URL + item.logo}
+              />
+            </LogoBackground>
+            <TimeSpanSection>
+              <TimeSpans>{item.postedAt}</TimeSpans>
+              <Dot>.</Dot>
+              <TimeSpans>{item.contract}</TimeSpans>
+            </TimeSpanSection>
+            <PositionName color={props.darkMode ? " #FFFFFF" : "#19202d"}>
+              {item.position}
+            </PositionName>
+            <CompanyName>{item.company}</CompanyName>
+            <CountryName>{item.location}</CountryName>
+          </Section>
+        ))}
+        {props.loadJobs ? (
+          <LoadMoreButton
+            pages={pages}
+            setPages={setPages}
+            loadJobs={props.loadJobs}
+            setLoadJobs={props.setLoadJobs}
+          />
+        ) : null}
+      </MainContainer> */}
+      <AboutJob darkMode={props.darkMode} />
+    </>
   );
 };
 
@@ -112,4 +119,15 @@ const LogoBackground = styled.div<{ backColor: string }>`
   justify-content: center;
   position: absolute;
   top: -25px;
+`;
+
+const TimeSpanSection = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Dot = styled.div`
+  width: 4px;
+  height: 4px;
+  color: #6e8098;
 `;
