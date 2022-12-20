@@ -11,6 +11,8 @@ function App() {
   const [filterValue, setFilterValue] = useState<string>("");
   const [filteredArray, setFilteredArray] = useState([]);
   const [openFilterModal, setFilterModal] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [loadJobs, setLoadJobs] = useState<boolean>(true);
 
   return (
     <Container>
@@ -24,8 +26,22 @@ function App() {
         filterValue={filterValue}
         setFilteredArray={setFilteredArray}
       />
-      <JobsList filteredArray={filteredArray} darkMode={darkMode} />
-      {openFilterModal ? <FilterModal darkMode={darkMode} /> : null}
+      <JobsList
+        filteredArray={filteredArray}
+        darkMode={darkMode}
+        loadJobs={loadJobs}
+        setLoadJobs={setLoadJobs}
+      />
+      {openFilterModal ? (
+        <FilterModal
+          setLoadJobs={setLoadJobs}
+          darkMode={darkMode}
+          setFilterModal={setFilterModal}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          setFilteredArray={setFilteredArray}
+        />
+      ) : null}
     </Container>
   );
 }

@@ -1,11 +1,61 @@
 import styled from "styled-components";
 import locationIMG from "../assets/desktop/icon-location.svg";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import data from "../data.json";
 
-const FilterModal = (props: { darkMode: boolean }) => {
+const FilterModal = (props: {
+  darkMode: boolean;
+  setFilterModal: (status: boolean) => void;
+  isChecked: boolean;
+  setIsChecked: (isChecked: boolean) => void;
+  setFilteredArray: any;
+  setLoadJobs: (loadJobs: boolean) => void;
+}) => {
+  const [location, setLocation] = useState<string>("");
+  const clickedPlace = useRef(null);
+  const clickedPlaceHandler = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.target === clickedPlace.current) {
+      props.setFilterModal(false);
+    }
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setIsChecked(!props.isChecked);
+  };
+
+  const LocationHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(event.target.value);
+  };
+
+  const searchButtonHandler = () => {
+    if (location.length > 0 || props.isChecked) {
+      if (props.isChecked) {
+        const newArray = data.slice();
+        const result = newArray.filter((item) =>
+          item.location.includes(location)
+        );
+        const resultOfFullTime = result.filter((item) =>
+          item.contract.includes("Full Time")
+        );
+        props.setFilteredArray(resultOfFullTime);
+        if (resultOfFullTime.length < 12) {
+          props.setLoadJobs(false);
+        }
+      } else {
+        const newArray = data.slice();
+        const result = newArray.filter((item) =>
+          item.location.includes(location)
+        );
+        props.setFilteredArray(result);
+        if (result.length < 12) {
+          props.setLoadJobs(false);
+        }
+      }
+    }
+    props.setFilterModal(false);
+  };
   return (
-    <ModalContainer>
-      <MainSection>
+    <ModalContainer ref={clickedPlace} onClick={clickedPlaceHandler}>
+      <MainSection color={props.darkMode ? " #19202D" : "#FFFFFF"}>
         <LocationSection>
           <img alt="location" src={locationIMG} />
           <FilterInput
@@ -13,14 +63,21 @@ const FilterModal = (props: { darkMode: boolean }) => {
             color={props.darkMode ? " #19202D" : "#FFFFFF"}
             type="text"
             placeholder="Filter by location…"
+            value={location}
+            onChange={LocationHandler}
           />
         </LocationSection>
         <hr />
-        <FullTimeSection>
-          <CheckBox type="checkbox" name="fullTimeFilter" />
+        <FullTimeSection color={props.darkMode ? "#FFFFFF" : " #19202D"}>
+          <CheckBox
+            onChange={handleChange}
+            checked={props.isChecked}
+            type="checkbox"
+            name="fullTimeFilter"
+          />
           <span>Full Time Only</span>
         </FullTimeSection>
-        <SearchButton>Search</SearchButton>
+        <SearchButton onClick={searchButtonHandler}>Search</SearchButton>
       </MainSection>
     </ModalContainer>
   );
@@ -45,7 +102,7 @@ const MainSection = styled.div`
   height: 225px;
   width: 327px;
   border-radius: 6px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.color};
   position: absolute;
 `;
 
@@ -86,7 +143,7 @@ const FullTimeSection = styled.div`
     font-weight: 700;
     line-height: 20px;
     letter-spacing: 0px;
-    color: #19202d;
+    color: ${(props) => props.color};
   }
 `;
 
@@ -105,4 +162,5 @@ const SearchButton = styled.button`
   color: #ffffff;
   border: none;
   margin: 0 24px 24px;
+  cursor: pointer;
 `;

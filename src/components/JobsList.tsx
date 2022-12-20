@@ -3,8 +3,12 @@ import styled from "styled-components";
 import data from "../data.json";
 import LoadMoreButton from "./LoadMoreButton";
 
-const JobsList = (props: { darkMode: boolean; filteredArray: any }) => {
-  const [loadJobs, setLoadJobs] = useState<boolean>(true);
+const JobsList = (props: {
+  darkMode: boolean;
+  filteredArray: any;
+  loadJobs: boolean;
+  setLoadJobs: (loadJobs: boolean) => void;
+}) => {
   const [pages, setPages] = useState<number>(1);
 
   let filteredData =
@@ -31,12 +35,12 @@ const JobsList = (props: { darkMode: boolean; filteredArray: any }) => {
           <CountryName>{item.location}</CountryName>
         </Section>
       ))}
-      {loadJobs ? (
+      {props.loadJobs ? (
         <LoadMoreButton
           pages={pages}
           setPages={setPages}
-          loadJobs={loadJobs}
-          setLoadJobs={setLoadJobs}
+          loadJobs={props.loadJobs}
+          setLoadJobs={props.setLoadJobs}
         />
       ) : null}
     </MainContainer>
