@@ -3,7 +3,6 @@ import filterIMG from "../assets/mobile/icon-filter.svg";
 import filterDarkIMG from "../assets/mobile/icon-filter-white.svg";
 import searchIMG from "../assets/desktop/icon-search.svg";
 import data from "../data.json";
-import { useState } from "react";
 
 interface FilterProps {
   darkMode: boolean;
@@ -15,6 +14,7 @@ interface FilterProps {
 }
 
 const Filter = (props: FilterProps) => {
+
   const filterHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.setFilterValue(event.target.value);
   };

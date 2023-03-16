@@ -17,9 +17,13 @@ const JobsList = (props: {
       ? props.filteredArray
       : data.slice(0, 12 * pages);
 
+  const aboutJobHandler = (clickedJob: any) => {
+    console.log(clickedJob)
+  }
+
   return (
     <>
-      {/* <MainContainer>
+      <MainContainer>
         {filteredData.map((item: any, index: any) => (
           <Section color={props.darkMode ? " #19202D" : "#FFFFFF"} key={index}>
             <LogoBackground backColor={item.logoBackground}>
@@ -33,7 +37,7 @@ const JobsList = (props: {
               <Dot>.</Dot>
               <TimeSpans>{item.contract}</TimeSpans>
             </TimeSpanSection>
-            <PositionName color={props.darkMode ? " #FFFFFF" : "#19202d"}>
+            <PositionName onClick={() => aboutJobHandler(item)} color={props.darkMode ? " #FFFFFF" : "#19202d"}>
               {item.position}
             </PositionName>
             <CompanyName>{item.company}</CompanyName>
@@ -48,7 +52,7 @@ const JobsList = (props: {
             setLoadJobs={props.setLoadJobs}
           />
         ) : null}
-      </MainContainer> */}
+      </MainContainer>
       <AboutJob darkMode={props.darkMode} />
     </>
   );
@@ -89,6 +93,7 @@ const PositionName = styled.h1`
   letter-spacing: 0px;
   color: ${(props) => props.color};
   margin: 16px 0;
+  cursor: pointer;
 `;
 
 const CompanyName = styled.span`

@@ -18,14 +18,14 @@ function App() {
     <Container>
       <GlobalStyles color={darkMode ? "#121721" : "#F4F6F8"} />
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-      {/* <Filter
+      <Filter
         openFilterModal={openFilterModal}
         setFilterModal={setFilterModal}
         darkMode={darkMode}
         setFilterValue={setFilterValue}
         filterValue={filterValue}
         setFilteredArray={setFilteredArray}
-      /> */}
+      />
       <JobsList
         filteredArray={filteredArray}
         darkMode={darkMode}
