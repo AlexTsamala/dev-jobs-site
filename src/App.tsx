@@ -5,6 +5,9 @@ import Filter from "./components/Filter";
 import JobsList from "./components/JobsList";
 import { useState } from "react";
 import FilterModal from "./components/FIlterModal";
+import { Navigate, Route, Routes } from "react-router";
+import AboutJob from "./components/AboutJob";
+import DesktopFilter from "./components/DesktopFilter";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -18,30 +21,46 @@ function App() {
     <Container>
       <GlobalStyles color={darkMode ? "#121721" : "#F4F6F8"} />
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-      <Filter
-        openFilterModal={openFilterModal}
-        setFilterModal={setFilterModal}
-        darkMode={darkMode}
-        setFilterValue={setFilterValue}
-        filterValue={filterValue}
-        setFilteredArray={setFilteredArray}
-      />
-      <JobsList
-        filteredArray={filteredArray}
-        darkMode={darkMode}
-        loadJobs={loadJobs}
-        setLoadJobs={setLoadJobs}
-      />
-      {openFilterModal ? (
-        <FilterModal
-          setLoadJobs={setLoadJobs}
-          darkMode={darkMode}
-          setFilterModal={setFilterModal}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
-          setFilteredArray={setFilteredArray}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <DesktopFilter
+                darkMode={darkMode}
+                setFilterValue={setFilterValue}
+                filterValue={filterValue}
+                setFilteredArray={setFilteredArray}
+              />
+              <Filter
+                openFilterModal={openFilterModal}
+                setFilterModal={setFilterModal}
+                darkMode={darkMode}
+                setFilterValue={setFilterValue}
+                filterValue={filterValue}
+                setFilteredArray={setFilteredArray}
+              />
+              <JobsList
+                filteredArray={filteredArray}
+                darkMode={darkMode}
+                loadJobs={loadJobs}
+                setLoadJobs={setLoadJobs}
+              />
+              {openFilterModal ? (
+                <FilterModal
+                  setLoadJobs={setLoadJobs}
+                  darkMode={darkMode}
+                  setFilterModal={setFilterModal}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                  setFilteredArray={setFilteredArray}
+                />
+              ) : null}
+            </>
+          }
         />
-      ) : null}
+        <Route path="/:company" element={<AboutJob darkMode={darkMode} />} />
+      </Routes>
     </Container>
   );
 }

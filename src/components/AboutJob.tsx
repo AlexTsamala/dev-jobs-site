@@ -1,16 +1,29 @@
 import styled from "styled-components";
 import data from "../data.json";
+import { useParams } from "react-router-dom";
 
 const AboutJob = (props: { darkMode: boolean }) => {
+  const { company } = useParams();
+  const companyName = company ? company : "";
+  const companyObj = data.find(
+    (item) => item.company.toLowerCase() === companyName.toLowerCase()
+  );
+  const obj: any = {};
+  const vacancyInformation = companyObj ? companyObj : obj;
   return (
     <Container>
       <Header color={props.darkMode ? " #19202D" : "#FFFFFF"}>
-        <LogoBackground backColor="hsl(36, 87%, 49%)">
-          <img alt="scoot" src={process.env.PUBLIC_URL + data[0].logo} />
+        <LogoBackground backColor={vacancyInformation.logoBackground}>
+          <img
+            alt="scoot"
+            src={process.env.PUBLIC_URL + vacancyInformation.logo}
+          />
         </LogoBackground>
-        <CompanyName color={props.darkMode ? "#FFFFFF" : " #19202D"}>Scoot</CompanyName>
+        <CompanyName color={props.darkMode ? "#FFFFFF" : " #19202D"}>
+          {vacancyInformation.company}
+        </CompanyName>
         <CompanySiteAddress color={props.darkMode ? " #FFFFFF" : "#19202d"}>
-          scoot.com
+          {`${vacancyInformation.company}.com`}
         </CompanySiteAddress>
         <CompanySiteLinkButton color={props.darkMode ? " #000013" : " #BEBEBE"}>
           <a href="https://example.com/scoot" rel="noreferrer" target="_blank">
@@ -20,38 +33,64 @@ const AboutJob = (props: { darkMode: boolean }) => {
       </Header>
       <DescribeSection color={props.darkMode ? "#19202D" : "#FFFFFF"}>
         <TimeSpanSection>
-          <TimeSpans>1w ago</TimeSpans>
+          <TimeSpans>{vacancyInformation.postedAt}</TimeSpans>
           <Dot></Dot>
-          <TimeSpans>Part Time</TimeSpans>
+          <TimeSpans>{vacancyInformation.contract}</TimeSpans>
         </TimeSpanSection>
         <PositionName color={props.darkMode ? " #FFFFFF" : "#19202d"}>
-          Senior Software Engineer
+          {vacancyInformation.position}
         </PositionName>
-        <CountryName>United Kingdrom</CountryName>
+        <CountryName>{vacancyInformation.location}</CountryName>
         <ApplyButton>
-          <a href="https://example.com/scoot/apply" rel="noreferrer" target="_blank">
+          <a
+            href="https://example.com/scoot/apply"
+            rel="noreferrer"
+            target="_blank"
+          >
             Apply Now
           </a>
         </ApplyButton>
-        <CompanyDescription>{data[0].description}</CompanyDescription>
-        <Title color={props.darkMode ? "#FFFFFF" : " #19202D"}>Requirements</Title>
-        <CompanyDescription>{data[0].requirements.content}</CompanyDescription>
+        <CompanyDescription>
+          {vacancyInformation.description}
+        </CompanyDescription>
+        <Title color={props.darkMode ? "#FFFFFF" : " #19202D"}>
+          Requirements
+        </Title>
+        <CompanyDescription>
+          {vacancyInformation.requirements.content}
+        </CompanyDescription>
         <UnorderedListSection>
-          <UnorderedList>{data[0].requirements.items[0]}</UnorderedList>
-          <UnorderedList>{data[0].requirements.items[1]}</UnorderedList>
-          <UnorderedList>{data[0].requirements.items[2]}</UnorderedList>
-          <UnorderedList>{data[0].requirements.items[3]}</UnorderedList>
+          <UnorderedList>
+            {vacancyInformation.requirements.items[0]}
+          </UnorderedList>
+          <UnorderedList>
+            {vacancyInformation.requirements.items[1]}
+          </UnorderedList>
+          <UnorderedList>
+            {vacancyInformation.requirements.items[2]}
+          </UnorderedList>
+          <UnorderedList>
+            {vacancyInformation.requirements.items[3]}
+          </UnorderedList>
         </UnorderedListSection>
-        <Title color={props.darkMode ? "#FFFFFF" : " #19202D"}>What You Will Do</Title>
-        <CompanyDescription>{data[0].role.content}</CompanyDescription>
+        <Title color={props.darkMode ? "#FFFFFF" : " #19202D"}>
+          What You Will Do
+        </Title>
+        <CompanyDescription>
+          {vacancyInformation.role.content}
+        </CompanyDescription>
         <OrderedListSection>
-          <OrderedList>{data[0].role.items[0]}</OrderedList>
-          <OrderedList>{data[0].role.items[1]}</OrderedList>
-          <OrderedList>{data[0].role.items[2]}</OrderedList>
-          <OrderedList>{data[0].role.items[3]}</OrderedList>
+          <OrderedList>{vacancyInformation.role.items[0]}</OrderedList>
+          <OrderedList>{vacancyInformation.role.items[1]}</OrderedList>
+          <OrderedList>{vacancyInformation.role.items[2]}</OrderedList>
+          <OrderedList>{vacancyInformation.role.items[3]}</OrderedList>
         </OrderedListSection>
         <ApplyButton>
-          <a href="https://example.com/scoot/apply" rel="noreferrer" target="_blank">
+          <a
+            href="https://example.com/scoot/apply"
+            rel="noreferrer"
+            target="_blank"
+          >
             Apply Now
           </a>
         </ApplyButton>

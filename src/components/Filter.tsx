@@ -14,7 +14,6 @@ interface FilterProps {
 }
 
 const Filter = (props: FilterProps) => {
-
   const filterHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.setFilterValue(event.target.value);
   };
@@ -77,6 +76,9 @@ const Section = styled.div`
   justify-content: space-between;
   padding: 0 16px 0 24px;
   transform: translateY(-40px);
+  @media (min-width: 1440px) {
+    display: none;
+  }
 `;
 
 const LocationSearchSection = styled.div``;

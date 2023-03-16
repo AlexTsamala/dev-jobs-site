@@ -30,6 +30,7 @@ const MainSection = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-bottom: 30px;
   h1 {
     font-size: 16px;
     font-weight: 700;

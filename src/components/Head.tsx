@@ -2,7 +2,6 @@ import styled from "styled-components";
 import backgroundIMG from "../assets/mobile/bg-pattern-header.svg";
 import sunIMG from "../assets/desktop/icon-sun.svg";
 import moonIMG from "../assets/desktop/icon-moon.svg";
-import { produceWithPatches } from "immer";
 
 interface propsType {
   darkMode: boolean;
@@ -47,10 +46,19 @@ const Container = styled.div`
   width: 100%;
   h1 {
     color: #ffffff;
+    @media (min-width: 1440px) {
+      margin-left: 9%;
+    }
   }
   div {
     display: flex;
     align-items: center;
     gap: 16px;
+    @media (min-width: 1440px) {
+      margin-right: 9%;
+    }
+  }
+  @media (min-width: 1440px) {
+    border-radius: 0px 0px 0px 100px;
   }
 `;

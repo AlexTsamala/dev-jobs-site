@@ -3,6 +3,7 @@ import styled from "styled-components";
 import data from "../data.json";
 import AboutJob from "./AboutJob";
 import LoadMoreButton from "./LoadMoreButton";
+import { useNavigate } from "react-router-dom";
 
 const JobsList = (props: {
   darkMode: boolean;
@@ -11,15 +12,15 @@ const JobsList = (props: {
   setLoadJobs: (loadJobs: boolean) => void;
 }) => {
   const [pages, setPages] = useState<number>(1);
-
+  const navigate = useNavigate();
   let filteredData =
     props.filteredArray.length > 0
       ? props.filteredArray
       : data.slice(0, 12 * pages);
 
   const aboutJobHandler = (clickedJob: any) => {
-    console.log(clickedJob)
-  }
+    navigate("/" + clickedJob.company);
+  };
 
   return (
     <>
@@ -37,23 +38,25 @@ const JobsList = (props: {
               <Dot>.</Dot>
               <TimeSpans>{item.contract}</TimeSpans>
             </TimeSpanSection>
-            <PositionName onClick={() => aboutJobHandler(item)} color={props.darkMode ? " #FFFFFF" : "#19202d"}>
+            <PositionName
+              onClick={() => aboutJobHandler(item)}
+              color={props.darkMode ? " #FFFFFF" : "#19202d"}
+            >
               {item.position}
             </PositionName>
             <CompanyName>{item.company}</CompanyName>
             <CountryName>{item.location}</CountryName>
           </Section>
         ))}
-        {props.loadJobs ? (
-          <LoadMoreButton
-            pages={pages}
-            setPages={setPages}
-            loadJobs={props.loadJobs}
-            setLoadJobs={props.setLoadJobs}
-          />
-        ) : null}
       </MainContainer>
-      <AboutJob darkMode={props.darkMode} />
+      {props.loadJobs ? (
+        <LoadMoreButton
+          pages={pages}
+          setPages={setPages}
+          loadJobs={props.loadJobs}
+          setLoadJobs={props.setLoadJobs}
+        />
+      ) : null}
     </>
   );
 };
@@ -66,6 +69,13 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 49px;
+  @media (min-width: 1440px) {
+    justify-content: center;
+    gap: 90px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 20px;
+  }
 `;
 
 const Section = styled.div`
