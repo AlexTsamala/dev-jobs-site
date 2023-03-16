@@ -5,7 +5,7 @@ import Filter from "./components/Filter";
 import JobsList from "./components/JobsList";
 import { useState } from "react";
 import FilterModal from "./components/FIlterModal";
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import AboutJob from "./components/AboutJob";
 import DesktopFilter from "./components/DesktopFilter";
 
